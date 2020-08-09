@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <iostream>
 #include <vector>
+#include <climits>
 
 
 using namespace std;
@@ -51,8 +52,73 @@ Graphe::ajouterArcs( int a_sommet1, int a_sommet2, int a_longueur, string a_nom 
 void
 Graphe::plusCourtChemin( void )
 {
+    //transformer le graphe en matrice
+    listeEnMatrice();
 
 }
+/**
+Transforme la liste des adjacence sous forme
+matricielle. 
+**/
+
+vector<vector<int>>
+Graphe::listeEnMatrice( void ){
+    vector<vector<int>> matriceAdjacences;
+    int size = _adjacences.size();
+
+
+    for(int i = 0 ; i < size ; i++){
+        vector<int> nouvVecteur;
+        for(int j = 0 ; j < size ; j++){
+            if(i==j){
+                nouvVecteur.push_back(0);
+
+            } else{
+                nouvVecteur.push_back(INT_MAX);
+            }
+        }
+        matriceAdjacences.push_back(nouvVecteur);
+    }
+
+    //changer les partie de la matrice
+    for(int k = 0 ; k <_adjacences.size() ; k++){
+        for(int m = 0 ; m < _adjacences[k]->size() ; m++){
+            int sommet = _adjacences[k]->at(m)->sommetArrive;
+            int longueurArc = _adjacences[k]->at(m)->longueur;
+            matriceAdjacences[k][sommet] = longueurArc;
+        }
+    }
+
+    //au départ remplir de 0 et de infini partout
+
+
+    // //afficher la liste d'incidence
+    // for(int m = 0 ; m < _adjacences.size() ; m++){
+    //     cout<< "SIZE: " << _adjacences[m]->size()<<endl;
+    //     cout<<"-------------"<<endl;
+    //     for(int n = 0 ; n < _adjacences[m]->size() ; n++){
+    //         cout<< _adjacences[m]->at(n)->sommetArrive<<endl;
+
+    //     }
+
+    // }
+
+    // //afficher matrice adjacence (DEBUG)
+    // for(int o = 0 ; o < matriceAdjacences.size() ; o++){
+    //     cout << "[";
+    //     for(int p = 0 ; p < matriceAdjacences[o].size() ; p++){
+    //         cout << matriceAdjacences[o][p] << ", ";
+    //     }
+    //     cout << "]" << endl;
+    // }
+
+
+    return matriceAdjacences;
+
+}
+
+//idee? : plutot que de faire de mm, remplir la matrice de infini et de 0
+// et juste changer les valeurs present dans liste adjacence
 
 
 ostream &

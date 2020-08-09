@@ -19,6 +19,7 @@ class Graphe
 {
 private:
     vector< vector< Arc * > * > _adjacences;
+    vector<vector<int>> listeEnMatrice( void );
 public:
     Graphe( void );
     virtual ~Graphe( void );
