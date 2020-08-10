@@ -147,13 +147,13 @@ Graphe::listeEnMatrice( void ){
     // }
 
     //afficher matrice adjacence (DEBUG)
-    for(int o = 0 ; o < matriceAdjacences.size() ; o++){
-        cout << "[";
-        for(int p = 0 ; p < matriceAdjacences[o].size() ; p++){
-            cout << matriceAdjacences[o][p] << ", ";
-        }
-        cout << "]" << endl;
-    }
+    // for(int o = 0 ; o < matriceAdjacences.size() ; o++){
+    //     cout << "[";
+    //     for(int p = 0 ; p < matriceAdjacences[o].size() ; p++){
+    //         cout << matriceAdjacences[o][p] << ", ";
+    //     }
+    //     cout << "]" << endl;
+    // }
 
 
     return matriceAdjacences;
