@@ -14,6 +14,9 @@
 #include <sstream>
 #include <string>
 
+#include <limits> // VOIR SI PERMIS
+#include <algorithm> // idem
+
 using namespace std;
 
 
@@ -57,7 +60,7 @@ lireDestinations( istream & a_in )
     vector< int > * resultat = new vector< int >();
     string reponseUtilisateur;
 
-    cout << "Entrez vos destinations séparées par des espaces : ";
+    cout << "Entrez vos destinations sï¿½parï¿½es par des espaces : ";
     getline( cin, reponseUtilisateur );
 
     istringstream entrees( reponseUtilisateur );
@@ -78,7 +81,28 @@ lireDestinations( istream & a_in )
 void
 afficherMeilleurTrajet( Graphe * a_ruesMontreal, vector< int > * a_destinations )
 {
-    // Trouver le meilleur ordre de visite des destinations et afficher.
+    int longueurPlusCourtChemin = numeric_limits<int>::max();
+    vector<int> noeudPlusCourtChemin;
+    int longueurTemporaire = 0;
+
+    sort(a_destinations->begin(), a_destinations->end());
+
+    do {
+        for (int i = 0; i < a_destinations->size() - 2; ++i) {
+            longueurTemporaire 
+                += a_ruesMontreal->matricePlusCourtesDistances
+                [a_destinations->at(i)][a_destinations->at(i + 1)];
+        }
+        if (longueurTemporaire < longueurPlusCourtChemin) {
+            longueurPlusCourtChemin = longueurTemporaire;
+            noeudPlusCourtChemin.push_back(a_destinations->at(0));
+            noeudPlusCourtChemin.push_back(a_destinations->at(1));
+            noeudPlusCourtChemin.push_back(a_destinations->at(2));
+        }
+        longueurTemporaire = 0;
+
+    } while (next_permutation(a_destinations->begin(), a_destinations->end()));
+
 
 }
 
