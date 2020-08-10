@@ -56,21 +56,41 @@ Graphe::plusCourtChemin( void )
     listeEnMatrice();
 
     //algorithme Floyd-Warshall
-    initialiserMatricePlusCourtesDistances();
-    initialiserMatriceProvenance();
+    initialiserMatricePlusCourtesDistances(); //sert a rien?
 
     int size = _adjacences.size();
-    vector<vector<int>> matriceDepart;
-    matricePlusCourtesDistances = matriceAdjacences;
+    vector<vector<int>> matriceDepart; // = matrice T
+    vector<vector<int>> matriceProvisoire; // = matrice P
+    //matricePlusCourtesDistances = matrice D
+    //matriceProvenances = matrice pi
 
-    for(int k = 0 ; k < size ; k ++){
+    matricePlusCourtesDistances = matriceAdjacences;
+    initialiserMatriceProvenance();
+
+    for(int k = 0 ; k < size ; k++){
         matriceDepart = matricePlusCourtesDistances;
+        matriceProvisoire = matriceProvenances;
+        initialiserMatricePlusCourtesDistances();
         for(int j = 0 ; j < size ; j++){
+            for( int i = 0 ; i < size ; i++){
+                int longueurTot = matriceDepart[i][j] + matriceDepart[k][j];
+                if(longueurTot < matriceDepart[i][j]){
+                    matricePlusCourtesDistances[i][j] = longueurTot;
+                    matriceProvenances[i][j] = matriceProvisoire[k][j];
+                } else{
+                    matricePlusCourtesDistances[i][j] = matriceDepart[i][j];
+                }
+            }
         }
     }
 
 }
 
+
+
+/**
+Initialise la matricePlusCourteDistance a 0
+**/
 void
 Graphe::initialiserMatricePlusCourtesDistances( void ){
     int size = _adjacences.size();
@@ -84,6 +104,11 @@ Graphe::initialiserMatricePlusCourtesDistances( void ){
     }
 }
 
+/**
+Initialise la matrice provenance
+met le numero du noeud s'il y a
+un chemin sinon met INT_MAX
+**/
 void
 Graphe::initialiserMatriceProvenance( void ){
     int size = _adjacences.size();
@@ -160,8 +185,21 @@ Graphe::listeEnMatrice( void ){
 
 }
 
-//idee? : plutot que de faire de mm, remplir la matrice de infini et de 0
-// et juste changer les valeurs present dans liste adjacence
+
+
+/**
+Affiche une matrice UTILISE POUR DEBUG
+**/
+// void afficherMatrice(vector<vector<int>> matrice){
+//     int size = matrice[0].size();
+//     for(int i = 0 ; i < size ; i++){
+//         cout <<"[ ";
+//         for( int j = 0 ; j < size ; j++){
+//             cout<< matrice[i][j] << ", ";
+//         }
+//         cout << "]" << endl;
+//     }
+// }
 
 
 ostream &
