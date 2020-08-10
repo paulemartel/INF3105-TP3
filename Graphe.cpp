@@ -55,7 +55,51 @@ Graphe::plusCourtChemin( void )
     //transformer le graphe en matrice
     listeEnMatrice();
 
+    //algorithme Floyd-Warshall
+    initialiserMatricePlusCourtesDistances();
+    initialiserMatriceProvenance();
+
+    int size = _adjacences.size();
+    vector<vector<int>> matriceDepart;
+    matricePlusCourtesDistances = matriceAdjacences;
+
+    for(int k = 0 ; k < size ; k ++){
+        matriceDepart = matricePlusCourtesDistances;
+        for(int j = 0 ; j < size ; j++){
+        }
+    }
+
 }
+
+void
+Graphe::initialiserMatricePlusCourtesDistances( void ){
+    int size = _adjacences.size();
+    for(int i = 0 ; i < size ; i++){
+        vector<int> nouvVecteur;
+        for(int j = 0 ; j < size ; j++){
+            nouvVecteur.push_back(0);
+        }
+        matricePlusCourtesDistances.push_back(nouvVecteur);
+
+    }
+}
+
+void
+Graphe::initialiserMatriceProvenance( void ){
+    int size = _adjacences.size();
+    for(int i = 0 ; i < size ; i++){
+        vector<int> nouvVecteur;
+        for(int j = 0 ; j < size ; j++){
+            if(matriceAdjacences[i][j] != INT_MAX){
+                nouvVecteur.push_back(i);
+            } else{
+                nouvVecteur.push_back(INT_MAX);
+            }
+        }
+        matricePlusCourtesDistances.push_back(nouvVecteur);
+    }
+}
+
 /**
 Transforme la liste des adjacence sous forme
 matricielle. 
@@ -63,7 +107,6 @@ matricielle.
 
 vector<vector<int>>
 Graphe::listeEnMatrice( void ){
-    vector<vector<int>> matriceAdjacences;
     int size = _adjacences.size();
 
 
@@ -92,7 +135,7 @@ Graphe::listeEnMatrice( void ){
     //au départ remplir de 0 et de infini partout
 
 
-    // //afficher la liste d'incidence
+    // //afficher la liste d'incidence (DEBUG)
     // for(int m = 0 ; m < _adjacences.size() ; m++){
     //     cout<< "SIZE: " << _adjacences[m]->size()<<endl;
     //     cout<<"-------------"<<endl;
@@ -103,14 +146,14 @@ Graphe::listeEnMatrice( void ){
 
     // }
 
-    // //afficher matrice adjacence (DEBUG)
-    // for(int o = 0 ; o < matriceAdjacences.size() ; o++){
-    //     cout << "[";
-    //     for(int p = 0 ; p < matriceAdjacences[o].size() ; p++){
-    //         cout << matriceAdjacences[o][p] << ", ";
-    //     }
-    //     cout << "]" << endl;
-    // }
+    //afficher matrice adjacence (DEBUG)
+    for(int o = 0 ; o < matriceAdjacences.size() ; o++){
+        cout << "[";
+        for(int p = 0 ; p < matriceAdjacences[o].size() ; p++){
+            cout << matriceAdjacences[o][p] << ", ";
+        }
+        cout << "]" << endl;
+    }
 
 
     return matriceAdjacences;
