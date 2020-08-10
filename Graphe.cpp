@@ -56,7 +56,6 @@ Graphe::plusCourtChemin( void )
     listeEnMatrice();
 
     //algorithme Floyd-Warshall
-    initialiserMatricePlusCourtesDistances(); //sert a rien?
 
     int size = _adjacences.size();
     vector<vector<int>> matriceDepart; // = matrice T
@@ -67,13 +66,20 @@ Graphe::plusCourtChemin( void )
     matricePlusCourtesDistances = matriceAdjacences;
     initialiserMatriceProvenance();
 
+
+
     for(int k = 0 ; k < size ; k++){
         matriceDepart = matricePlusCourtesDistances;
         matriceProvisoire = matriceProvenances;
         initialiserMatricePlusCourtesDistances();
         for(int j = 0 ; j < size ; j++){
             for( int i = 0 ; i < size ; i++){
-                int longueurTot = matriceDepart[i][j] + matriceDepart[k][j];
+                int longueurTot;
+                if(matriceDepart[i][k] == INT_MAX || matriceDepart[k][j] == INT_MAX){
+                    longueurTot = INT_MAX;
+                } else{
+                    longueurTot = matriceDepart[i][k] + matriceDepart[k][j];
+                }
                 if(longueurTot < matriceDepart[i][j]){
                     matricePlusCourtesDistances[i][j] = longueurTot;
                     matriceProvenances[i][j] = matriceProvisoire[k][j];
@@ -83,6 +89,29 @@ Graphe::plusCourtChemin( void )
             }
         }
     }
+
+    // //afficher vecteur (DEBUG)
+    // cout<<"MATRICE PLUS COURTES DISTANCES"<<endl;
+    // for(int o = 0 ; o < size ; o++){
+    //     cout <<"[ ";
+    //     for( int p = 0 ; p < size ; p++){
+    //         cout<< matricePlusCourtesDistances[o][p] << ", ";
+    //     }
+    //     cout << "]" << endl;
+    // }
+    // cout<<"MATRICE PROVENANCE"<<endl;
+    // //afficher vecteur (DEBUG)
+    // for(int o = 0 ; o < size ; o++){
+    //     cout <<"[ ";
+    //     for( int p = 0 ; p < size ; p++){
+    //         cout<< matriceProvenances[o][p] << ", ";
+    //     }
+    //     cout << "]" << endl;
+    // }
+
+
+
+    //TODO : desallouer l'espace pour matrice depart et matrice provisoire?
 
 }
 
@@ -121,7 +150,7 @@ Graphe::initialiserMatriceProvenance( void ){
                 nouvVecteur.push_back(INT_MAX);
             }
         }
-        matricePlusCourtesDistances.push_back(nouvVecteur);
+        matriceProvenances.push_back(nouvVecteur);
     }
 }
 
