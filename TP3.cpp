@@ -77,50 +77,39 @@ lireDestinations( istream & a_in )
     return resultat;
 }
 
+vector <int> calculerPlusCourtChemin (Graphe * carte, 
+        vector< int > * destinations) {
+            int longueurPlusCourtChemin = numeric_limits<int>::max();
+    vector<int> noeudPlusCourtChemin;
+    int longueurTemporaire = 0;
+
+    sort(destinations->begin(), destinations->end());
+
+    do {
+        for (int i = 0; i <= destinations->size() - 2; ++i) {
+            longueurTemporaire 
+                += carte->matricePlusCourtesDistances
+                [destinations->at(i)][destinations->at(i + 1)];
+        }
+        if (longueurTemporaire < longueurPlusCourtChemin) {
+            longueurPlusCourtChemin = longueurTemporaire;
+            // on fait une copie de la permutation actuelle
+            noeudPlusCourtChemin = * destinations;
+        }
+        longueurTemporaire = 0;
+    } while (next_permutation(destinations->begin(), destinations->end()));
+
+    return noeudPlusCourtChemin;
+}
 
 void
 afficherMeilleurTrajet( Graphe * a_ruesMontreal, vector< int > * a_destinations )
 {
     // CALCUL DU PLUS COURT CHEMIN
 
-    //calculerPlusCourtChemin (Graphe * a_ruesMontreal, vector< int > * a_destinations);
-
-    int longueurPlusCourtChemin = numeric_limits<int>::max();
-    vector<int> noeudPlusCourtChemin;
-    int longueurTemporaire = 0;
-
-    sort(a_destinations->begin(), a_destinations->end());
-
-    do {
-        //cout << "destinations : "; // F
-        //for (int n : * a_destinations) {
-        //    cout << n << " "; 
-        //}
-        //cout << endl;
-
-        for (int i = 0; i <= a_destinations->size() - 2; ++i) {
-            longueurTemporaire 
-                += a_ruesMontreal->matricePlusCourtesDistances
-                [a_destinations->at(i)][a_destinations->at(i + 1)];
-            //cout << " distance entre " << a_destinations->at(i) << " et " << a_destinations->at(i + 1) << " : " << a_ruesMontreal->matricePlusCourtesDistances
-                //[a_destinations->at(i)][a_destinations->at(i + 1)];
-        }
-        //cout << ", longTemp : " << longueurTemporaire; // F
-        if (longueurTemporaire < longueurPlusCourtChemin) {
-            longueurPlusCourtChemin = longueurTemporaire;
-            // on fait une copie de la permutation actuelle
-            noeudPlusCourtChemin = * a_destinations;
-        }
-        longueurTemporaire = 0;
-        //cout << ", LPPC : " << longueurPlusCourtChemin << endl;
-    } while (next_permutation(a_destinations->begin(), a_destinations->end()));
-    /*
-    cout << "noeudsPlusCourtChemin : ";
-    for (int n : noeudPlusCourtChemin) {
-        cout << n << ", ";
-    }
-    cout << endl;
-    */
+    vector<int> noeudPlusCourtChemin 
+        = calculerPlusCourtChemin(a_ruesMontreal, a_destinations); 
+    
     // AFFICHAGE DUDIT CHEMIN
 
     cout << noeudPlusCourtChemin.at(0) << ", ";
@@ -135,7 +124,7 @@ afficherMeilleurTrajet( Graphe * a_ruesMontreal, vector< int > * a_destinations 
 
         while (finChemin == false) {
             noeudActuel = a_ruesMontreal->matriceProvenances[debut][fin];
-            //cout << endl << "provenance : " << a_ruesMontreal->matriceProvenances[debut][fin] << endl; // F
+
             if (noeudActuel != debut) {
                 noeudsIntermediaires.push_back(noeudActuel);
                 fin = noeudActuel;
@@ -169,13 +158,11 @@ afficherMeilleurTrajet( Graphe * a_ruesMontreal, vector< int > * a_destinations 
                 }
                 noeudsIntermediaires.pop_back();
             }
-        
         } else {
             cout << a_ruesMontreal->obtenirNomRue(debut, fin) << ", ";
             cout << fin;
         }
     }
-
     cout << "." << endl;
 }
 
