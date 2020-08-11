@@ -58,10 +58,9 @@ Graphe::ajouterArcs( int a_sommet1, int a_sommet2, int a_longueur, string a_nom 
 }
 
 /**
-Fait le calcul de la matrice des plus courts chemin et
-celle de la matrices des provenances. Stocke les resultats
-dans matricePlusCourtesDistances et matriceProvisoire
-
+* Fait le calcul de la matrice des plus courts chemins et de
+* celle des provenances, puis stocke les resultats
+* dans matricePlusCourtesDistances et matriceProvisoire.
 **/
 void
 Graphe::plusCourtChemin( void )
@@ -104,7 +103,7 @@ Graphe::plusCourtChemin( void )
 
 
 /**
-Initialise la matricePlusCourteDistance a 0
+* Initialise la matricePlusCourteDistance a 0.
 **/
 void
 Graphe::initialiserMatricePlusCourtesDistances( void ){
@@ -120,9 +119,8 @@ Graphe::initialiserMatricePlusCourtesDistances( void ){
 }
 
 /**
-Initialise la matrice provenance
-initialise avec le numero du noeud s'il y a
-un chemin sinon met INT_MAX
+* Initialise la matrice des provenances avec le numero du noeud s'il y a
+* un chemin, sinon l'initialise a infini.
 **/
 void
 Graphe::initialiserMatriceProvenance( void ){
@@ -141,10 +139,10 @@ Graphe::initialiserMatriceProvenance( void ){
 }
 
 /**
-Transforme la liste des adjacence sous forme
-matricielle. 
+* Transforme la liste des adjacences sous forme matricielle. 
+*
+* @return vector<vector<int>> matriceAdjacences la matrice des adjacences
 **/
-
 vector<vector<int>>
 Graphe::listeEnMatrice( void ){
     int size = _adjacences.size();

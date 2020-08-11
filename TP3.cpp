@@ -1,5 +1,15 @@
-/*
+/**
  * TP3.cpp
+ * 
+ * Auteures : Paule Martel et Gabrielle Poitras
+ * Codes permanents : 
+ *     MARP16569700
+ *     POIG16519008
+ * Courriels : 
+ *     martel.paule@courrier.uqam.ca
+ *     poitras.gabrielle.2@courrier.uqam.ca
+ * Cours : INF3105-30
+ * Date : 2020-08-11
  */
 
 #include "DocumentXML.hpp"
@@ -79,15 +89,16 @@ lireDestinations( istream & a_in )
 }
 
 /**
- * Calcule la longueur du trajet optimal pour visiter tous les lieux choisis
- * par l'utilisateur.
- * 
- * @param Graphe * carte  carte (graphe) des lieux a visiter (noeuds) et des
- *     rues les reliants (arcs)
- * @param vector< int > * destinations  liste des destinations entres par
- *     l'utilisateur
+* Calcule la longueur du trajet optimal pour visiter tous les lieux choisis
+* par l'utilisateur.
+* 
+* @param Graphe * carte  carte (graphe) des lieux a visiter (noeuds) et des
+*     rues les reliants (arcs)
+* @param vector< int > * destinations  liste des destinations entres par
+*     l'utilisateur
+* @return vector<int> noeudPlusCourtChemin vecteur contenant l'ordre dans 
+*     lequel visiter les differents lieux entres par l'utilisateur
 */ 
-
 vector <int> calculerPlusCourtChemin (Graphe * carte, 
         vector< int > * destinations) {
 
@@ -115,15 +126,14 @@ vector <int> calculerPlusCourtChemin (Graphe * carte,
 }
 
 /**
- * Affiche le meilleur trajet, en calculant d'abord le chemin le plus court 
- * entre les lieux entres par l'utilisateur, puis en affichant le trajet optimal
- * (lieux et rues en alternance).
- * 
- * @param Graphe * a_ruesMontreal  carte (graphe) des lieux a visiter (noeuds)
- *     et des rues les reliants (arcs)
- * @param vector< int > * a_destinations  trajet optimal entre les destinations
+* Affiche le meilleur trajet, en calculant d'abord le chemin le plus court 
+* entre les lieux entres par l'utilisateur, puis en affichant le trajet optimal
+* (lieux et rues en alternance).
+* 
+* @param Graphe * a_ruesMontreal  carte (graphe) des lieux a visiter (noeuds)
+*     et des rues les reliants (arcs)
+* @param vector< int > * a_destinations  trajet optimal entre les destinations
 */ 
-
 void
 afficherMeilleurTrajet(Graphe * a_ruesMontreal, vector< int > * a_destinations)
 {
