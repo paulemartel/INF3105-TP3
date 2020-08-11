@@ -77,9 +77,20 @@ lireDestinations( istream & a_in )
     return resultat;
 }
 
+/**
+ * Calcule la longueur du trajet optimal pour visiter tous les lieux choisis
+ * par l'utilisateur.
+ * 
+ * @param Graphe * carte  carte (graphe) des lieux a visiter (noeuds) et des
+ *     rues les reliants (arcs)
+ * @param vector< int > * destinations  liste des destinations entres par
+ *     l'utilisateur
+*/ 
+
 vector <int> calculerPlusCourtChemin (Graphe * carte, 
         vector< int > * destinations) {
-            int longueurPlusCourtChemin = numeric_limits<int>::max();
+
+    int longueurPlusCourtChemin = numeric_limits<int>::max();
     vector<int> noeudPlusCourtChemin;
     int longueurTemporaire = 0;
 
@@ -102,16 +113,24 @@ vector <int> calculerPlusCourtChemin (Graphe * carte,
     return noeudPlusCourtChemin;
 }
 
-void
-afficherMeilleurTrajet( Graphe * a_ruesMontreal, vector< int > * a_destinations )
-{
-    // CALCUL DU PLUS COURT CHEMIN
+/**
+ * Affiche le meilleur trajet, en calculant d'abord le chemin le plus court 
+ * entre les lieux entres par l'utilisateur, puis en affichant le trajet optimal
+ * (lieux et rues en alternance).
+ * 
+ * @param Graphe * a_ruesMontreal  carte (graphe) des lieux a visiter (noeuds)
+ *     et des rues les reliants (arcs)
+ * @param vector< int > * a_destinations  trajet optimal entre les destinations
+*/ 
 
+void
+afficherMeilleurTrajet(Graphe * a_ruesMontreal, vector< int > * a_destinations)
+{
+    // on calcule le plus court chemin
     vector<int> noeudPlusCourtChemin 
         = calculerPlusCourtChemin(a_ruesMontreal, a_destinations); 
     
-    // AFFICHAGE DUDIT CHEMIN
-
+    // on affiche le chemin en question
     cout << noeudPlusCourtChemin.at(0) << ", ";
     
     for (int i = 0; i <= noeudPlusCourtChemin.size() - 2; ++i) {
@@ -134,22 +153,28 @@ afficherMeilleurTrajet( Graphe * a_ruesMontreal, vector< int > * a_destinations 
         }
         
         if (noeudsIntermediaires.size() > 0) {
+
             cout << a_ruesMontreal->obtenirNomRue(debut, 
             noeudsIntermediaires.back()) << ", ";
             cout << noeudsIntermediaires.back() << ", ";
+
             while (noeudsIntermediaires.size() > 0) {
+
                 if (noeudsIntermediaires.size() > 1)  {
                     cout << a_ruesMontreal->obtenirNomRue(
                         noeudsIntermediaires.back(),
                         noeudsIntermediaires.at(
                             noeudsIntermediaires.size() - 2)) << ", ";
-	            cout << noeudsIntermediaires.at(
-                    noeudsIntermediaires.size() - 2) << ", ";
+	                cout << noeudsIntermediaires.at(
+                        noeudsIntermediaires.size() - 2) << ", ";
+
                 } else {
+
                     cout << a_ruesMontreal->obtenirNomRue(
                         noeudsIntermediaires.back(),
                         noeudPlusCourtChemin.at(i + 1)) << ", ";  
                     cout << noeudPlusCourtChemin.at(i + 1);
+
                     if (noeudPlusCourtChemin.size() > 2 
                             && noeudPlusCourtChemin.at(i + 1) 
                             != noeudPlusCourtChemin.back()) {
