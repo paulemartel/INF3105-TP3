@@ -105,7 +105,7 @@ afficherMeilleurTrajet( Graphe * a_ruesMontreal, vector< int > * a_destinations 
 
     // AFFICHAGE DUDIT CHEMIN
 
-    cout << a_destinations->at(0) << ", " << endl;
+    cout << a_destinations->at(0) << ", ";
 
     for (int i = 0; i <= a_destinations->size() - 2; ++i) {
         
@@ -126,12 +126,16 @@ afficherMeilleurTrajet( Graphe * a_ruesMontreal, vector< int > * a_destinations 
         }
         
         cout << a_ruesMontreal->obtenirNomRue(a_destinations->at(i), 
-                noeudsIntermediaires.back());
-        // vector pop back
-        // while (vector.size() > 1) {
-        //     cout << arc entre vector.size (n - 1) et vector.size (n - 2)
-        // }
-        // cout << arc entre vector.back() et a_destinations->at(i + 1)
+                noeudsIntermediaires.back()) << ", ";
+        //noeudsIntermediaires.pop_back();
+        while (noeudsIntermediaires.size() > 0) {
+            cout << noeudsIntermediaires.back() << ", ";
+            cout << a_ruesMontreal->obtenirNomRue(noeudsIntermediaires.back(),
+                noeudsIntermediaires.at(noeudsIntermediaires.size() - 2)) << ", ";
+            noeudsIntermediaires.pop_back();
+        }
+        cout << a_ruesMontreal->obtenirNomRue(noeudsIntermediaires.back(), 
+                a_destinations->at(i + 1));
     }
 
     cout << a_destinations->back() << "." << endl;

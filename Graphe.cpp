@@ -30,7 +30,13 @@ Graphe::~Graphe( void )
 }
 
 string Graphe::obtenirNomRue (int sommet, int arc) {
-    return _adjacences[sommet]->at(arc)->nom;
+    string nomRue;
+    for (auto unArc : * _adjacences[sommet]) {
+        if (unArc->sommetArrive == arc) {
+            nomRue = unArc->nom;
+        }
+    }
+    return nomRue;
 }
 
 void
