@@ -57,7 +57,12 @@ Graphe::ajouterArcs( int a_sommet1, int a_sommet2, int a_longueur, string a_nom 
     _adjacences[a_sommet2]->push_back( new Arc( a_sommet1, a_longueur, a_nom ) );
 }
 
+/**
+Fait le calcul de la matrice des plus courts chemin et
+celle de la matrices des provenances. Stocke les resultats
+dans matricePlusCourtesDistances et matriceProvisoire
 
+**/
 void
 Graphe::plusCourtChemin( void )
 {
@@ -65,17 +70,12 @@ Graphe::plusCourtChemin( void )
     listeEnMatrice();
 
     //algorithme Floyd-Warshall
-
     int size = _adjacences.size();
-    vector<vector<int>> matriceDepart; // = matrice T
-    vector<vector<int>> matriceProvisoire; // = matrice P
-    //matricePlusCourtesDistances = matrice D
-    //matriceProvenances = matrice pi
+    vector<vector<int>> matriceDepart;
+    vector<vector<int>> matriceProvisoire;
 
     matricePlusCourtesDistances = matriceAdjacences;
     initialiserMatriceProvenance();
-
-
 
     for(int k = 0 ; k < size ; k++){
         matriceDepart = matricePlusCourtesDistances;
@@ -84,7 +84,8 @@ Graphe::plusCourtChemin( void )
         for(int j = 0 ; j < size ; j++){
             for( int i = 0 ; i < size ; i++){
                 int longueurTot;
-                if(matriceDepart[i][k] == INT_MAX || matriceDepart[k][j] == INT_MAX){
+                if(matriceDepart[i][k] == INT_MAX 
+                    || matriceDepart[k][j] == INT_MAX){
                     longueurTot = INT_MAX;
                 } else{
                     longueurTot = matriceDepart[i][k] + matriceDepart[k][j];
@@ -98,30 +99,6 @@ Graphe::plusCourtChemin( void )
             }
         }
     }
-
-    // //afficher vecteur (DEBUG)
-    // cout<<"MATRICE PLUS COURTES DISTANCES"<<endl;
-    // for(int o = 0 ; o < size ; o++){
-    //     cout <<"[ ";
-    //     for( int p = 0 ; p < size ; p++){
-    //         cout<< matricePlusCourtesDistances[o][p] << ", ";
-    //     }
-    //     cout << "]" << endl;
-    // }
-    // cout<<"MATRICE PROVENANCE"<<endl;
-    // //afficher vecteur (DEBUG)
-    // for(int o = 0 ; o < size ; o++){
-    //     cout <<"[ ";
-    //     for( int p = 0 ; p < size ; p++){
-    //         cout<< matriceProvenances[o][p] << ", ";
-    //     }
-    //     cout << "]" << endl;
-    // }
-
-
-
-    //TODO : desallouer l'espace pour matrice depart et matrice provisoire?
-
 }
 
 
@@ -144,7 +121,7 @@ Graphe::initialiserMatricePlusCourtesDistances( void ){
 
 /**
 Initialise la matrice provenance
-met le numero du noeud s'il y a
+initialise avec le numero du noeud s'il y a
 un chemin sinon met INT_MAX
 **/
 void
@@ -172,11 +149,11 @@ vector<vector<int>>
 Graphe::listeEnMatrice( void ){
     int size = _adjacences.size();
 
-
+    //initialiser le tout a infini
     for(int i = 0 ; i < size ; i++){
         vector<int> nouvVecteur;
         for(int j = 0 ; j < size ; j++){
-            if(i==j){
+            if(i == j){
                 nouvVecteur.push_back(0);
 
             } else{
@@ -195,49 +172,11 @@ Graphe::listeEnMatrice( void ){
         }
     }
 
-    //au départ remplir de 0 et de infini partout
-
-
-    // //afficher la liste d'incidence (DEBUG)
-    // for(int m = 0 ; m < _adjacences.size() ; m++){
-    //     cout<< "SIZE: " << _adjacences[m]->size()<<endl;
-    //     cout<<"-------------"<<endl;
-    //     for(int n = 0 ; n < _adjacences[m]->size() ; n++){
-    //         cout<< _adjacences[m]->at(n)->sommetArrive<<endl;
-
-    //     }
-
-    // }
-
-    //afficher matrice adjacence (DEBUG)
-    // for(int o = 0 ; o < matriceAdjacences.size() ; o++){
-    //     cout << "[";
-    //     for(int p = 0 ; p < matriceAdjacences[o].size() ; p++){
-    //         cout << matriceAdjacences[o][p] << ", ";
-    //     }
-    //     cout << "]" << endl;
-    // }
-
-
     return matriceAdjacences;
 
 }
 
 
-
-/**
-Affiche une matrice UTILISE POUR DEBUG
-**/
-// void afficherMatrice(vector<vector<int>> matrice){
-//     int size = matrice[0].size();
-//     for(int i = 0 ; i < size ; i++){
-//         cout <<"[ ";
-//         for( int j = 0 ; j < size ; j++){
-//             cout<< matrice[i][j] << ", ";
-//         }
-//         cout << "]" << endl;
-//     }
-// }
 
 
 ostream &
