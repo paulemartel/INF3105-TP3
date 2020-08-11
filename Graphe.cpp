@@ -30,8 +30,8 @@ Graphe::~Graphe( void )
 }
 
 /**
- * Permet d'acceder au nom des rues (arcs) de l'exterieur
- * de la classe.
+ * Permet d'acceder au nom des rues (arcs) depuis 
+ * l'exterieur de la classe.
  *
  * @param int sommet lieu de depart de l'arc
  * @param arc la rue en question
