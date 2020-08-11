@@ -14,8 +14,8 @@
 #include <sstream>
 #include <string>
 
-#include <limits> // VOIR SI PERMIS
-#include <algorithm> // idem
+#include <limits>
+#include <algorithm>
 
 using namespace std;
 
