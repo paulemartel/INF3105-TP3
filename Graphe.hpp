@@ -28,9 +28,12 @@ public:
     Graphe( void );
     virtual ~Graphe( void );
 
+    string obtenirNomRue (int sommet, int arc);
+
     void ajouterArcs( int a_sommet1, int a_sommet2, int a_longueur, string a_nom );
     void plusCourtChemin( void );
     //void afficherMatrice(&vector<vector<int>> matrice);
+    
     vector<vector<int>> matricePlusCourtesDistances;
     vector<vector<int>> matriceProvenances;
 

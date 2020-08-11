@@ -29,6 +29,9 @@ Graphe::~Graphe( void )
     // Il n'est donc pas utile de desallouer les elements.
 }
 
+string Graphe::obtenirNomRue (int sommet, int arc) {
+    return _adjacences[sommet]->at(arc)->nom;
+}
 
 void
 Graphe::ajouterArcs( int a_sommet1, int a_sommet2, int a_longueur, string a_nom )

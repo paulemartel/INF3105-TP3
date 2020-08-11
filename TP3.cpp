@@ -81,6 +81,7 @@ lireDestinations( istream & a_in )
 void
 afficherMeilleurTrajet( Graphe * a_ruesMontreal, vector< int > * a_destinations )
 {
+    // CALCUL DU PLUS COURT CHEMIN
     int longueurPlusCourtChemin = numeric_limits<int>::max();
     vector<int> noeudPlusCourtChemin;
     int longueurTemporaire = 0;
@@ -95,15 +96,45 @@ afficherMeilleurTrajet( Graphe * a_ruesMontreal, vector< int > * a_destinations 
         }
         if (longueurTemporaire < longueurPlusCourtChemin) {
             longueurPlusCourtChemin = longueurTemporaire;
-            noeudPlusCourtChemin.push_back(a_destinations->at(0));
-            noeudPlusCourtChemin.push_back(a_destinations->at(1));
-            noeudPlusCourtChemin.push_back(a_destinations->at(2));
+            // on fait une copie de la permutation actuelle
+            noeudPlusCourtChemin = * a_destinations;
         }
         longueurTemporaire = 0;
 
     } while (next_permutation(a_destinations->begin(), a_destinations->end()));
 
+    // AFFICHAGE DUDIT CHEMIN
 
+    cout << a_destinations->at(0) << ", " << endl;
+
+    for (int i = 0; i <= a_destinations->size() - 2; ++i) {
+        
+        int debut = a_destinations->at(i);
+        int fin = a_destinations->at(i + 1);
+        vector<int> noeudsIntermediaires;
+        int noeudActuel;
+        bool finChemin = false;
+
+        while (finChemin == false) {
+            noeudActuel = a_ruesMontreal->matriceProvenances[debut][fin];
+            if (noeudActuel != debut) {
+                noeudsIntermediaires.push_back(noeudActuel);
+                fin = noeudActuel;
+            } else {
+                finChemin = true;
+            }
+        }
+        
+        cout << a_ruesMontreal->obtenirNomRue(a_destinations->at(i), 
+                noeudsIntermediaires.back());
+        // vector pop back
+        // while (vector.size() > 1) {
+        //     cout << arc entre vector.size (n - 1) et vector.size (n - 2)
+        // }
+        // cout << arc entre vector.back() et a_destinations->at(i + 1)
+    }
+
+    cout << a_destinations->back() << "." << endl;
 }
 
 
