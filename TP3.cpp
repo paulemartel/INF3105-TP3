@@ -14,7 +14,8 @@
 #include <sstream>
 #include <string>
 
-#include <limits>
+
+#include <climits>
 #include <algorithm>
 
 using namespace std;
@@ -90,7 +91,7 @@ lireDestinations( istream & a_in )
 vector <int> calculerPlusCourtChemin (Graphe * carte, 
         vector< int > * destinations) {
 
-    int longueurPlusCourtChemin = numeric_limits<int>::max();
+    int longueurPlusCourtChemin = INT_MAX;
     vector<int> noeudPlusCourtChemin;
     int longueurTemporaire = 0;
 
