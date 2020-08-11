@@ -29,6 +29,14 @@ Graphe::~Graphe( void )
     // Il n'est donc pas utile de desallouer les elements.
 }
 
+/**
+ * Permet d'acceder au nom des rues (arcs) de l'exterieur
+ * de la classe.
+ *
+ * @param int sommet lieu de depart de l'arc
+ * @param arc la rue en question
+ * @return nomRue le nom de la rue
+**/
 string Graphe::obtenirNomRue (int sommet, int arc) {
     string nomRue;
     for (auto unArc : * _adjacences[sommet]) {
