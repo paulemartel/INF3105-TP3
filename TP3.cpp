@@ -126,25 +126,32 @@ afficherMeilleurTrajet( Graphe * a_ruesMontreal, vector< int > * a_destinations 
         cout << debut << ", ";
 
         if (noeudsIntermediaires.size() > 0) {
-            cout << a_ruesMontreal->obtenirNomRue(a_destinations->at(i), 
-                noeudsIntermediaires.back()) << ", ";
+            cout << a_ruesMontreal->obtenirNomRue(debut, noeudsIntermediaires.back()) << ", ";
 
             while (noeudsIntermediaires.size() > 0) {
                 cout << noeudsIntermediaires.back() << ", ";
-                cout << a_ruesMontreal->obtenirNomRue(noeudsIntermediaires.back(),
-                    noeudsIntermediaires.at(noeudsIntermediaires.size() - 2)) << ", ";
+                if (noeudsIntermediaires.size() > 1)  {
+                    cout << a_ruesMontreal->obtenirNomRue(noeudsIntermediaires.back(),
+                        noeudsIntermediaires.at(noeudsIntermediaires.size() - 2)) << ", ";
+	            cout << noeudsIntermediaires.at(noeudsIntermediaires.size() - 2) << ", ";
+                } else {
+                    cout << a_ruesMontreal->obtenirNomRue(noeudsIntermediaires.back(),
+                        a_destinations->at(i + 1)) << ", ";  
+                    cout << a_destinations->at(i + 1);
+                    if (a_destinations->size() > 2) {
+                        cout << ", ";
+                    }
+                }
                 noeudsIntermediaires.pop_back();
             }
         
-            cout << a_ruesMontreal->obtenirNomRue(noeudsIntermediaires.back(), 
-                a_destinations->at(i + 1));
         } else {
             cout << a_ruesMontreal->obtenirNomRue(debut, fin) << ", ";
+            cout << fin;
         }
-
     }
 
-    cout << a_destinations->back() << "." << endl;
+    cout << "." << endl;
 }
 
 
