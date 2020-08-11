@@ -198,8 +198,6 @@ main( int argn, char * argv [] )
 {
     Graphe * ruesMontreal = construireGraphe( "map_montreal.xml" );
 
-    //cout << *ruesMontreal << endl;
-
     ruesMontreal->plusCourtChemin();
 
     vector< int > * destinations = lireDestinations( cin );
